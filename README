@@ -1,0 +1,65 @@
+Overview
+This VHDL code implements a basic Arithmetic Logic Unit (ALU) with four different operations. 
+The ALU is designed to perform addition, subtraction, multiplication, and division on two 4-bit integer inputs. 
+The result of the operation and status flags are output from the ALU.
+
+Entity Description
+Ports
+A: in integer range 0 to 15
+The first 4-bit integer input for the ALU. Values should be in the range of 0 to 15.
+
+B: in integer range 0 to 15
+The second 4-bit integer input for the ALU. Values should be in the range of 0 to 15.
+
+OP: in std_logic_vector(1 downto 0)
+The operation selector input. Determines which arithmetic or logic operation to perform. The possible values and their corresponding operations are:
+
+"00": Addition (A + B)
+"01": Subtraction (A - B)
+"10": Multiplication (A * B)
+"11": Division (A / B)
+Qout: out integer range 0 to 15
+The result of the operation. The output will be in the range of 0 to 15.
+
+z: out std_logic
+Zero flag. Set to '1' if the result of the operation is zero, otherwise set to '0'.
+
+c: out std_logic
+Carry flag. Set to '1' if there is a carry-out from the addition or if there is a borrow in the subtraction or division; otherwise, set to '0'.
+
+Functionality
+Addition (OP = "00")
+Operation: A + B
+Carry (c): '1' if the result is greater than 15, indicating an overflow. '0' otherwise.
+Zero (z): '1' if the result is zero, '0' otherwise.
+Subtraction (OP = "01")
+Operation: A - B
+Carry (c): '1' if the result is negative (i.e., if A < B). '0' otherwise.
+Zero (z): '1' if the result is zero, '0' otherwise.
+Multiplication (OP = "10")
+Operation: A * B
+Carry (c): '1' if the result exceeds 15 (i.e., if A * B > 15). '0' otherwise.
+Zero (z): '1' if the result is zero, '0' otherwise.
+Division (OP = "11")
+Operation: A / B
+Carry (c): '1' if B is zero (to avoid division by zero). '0' otherwise.
+Zero (z): '1' if the result is zero, '0' otherwise.
+Example
+Inputs: A = 7, B = 5, OP = "00"
+Operation: Addition
+Output: Qout = 12, c = '0', z = '0'
+
+Inputs: A = 3, B = 5, OP = "01"
+Operation: Subtraction
+Output: Qout = 12 (since the output is unsigned, underflow is not shown here), c = '1', z = '0'
+
+Inputs: A = 3, B = 5, OP = "10"
+Operation: Multiplication
+Output: Qout = 15, c = '0', z = '0'
+
+Inputs: A = 6, B = 3, OP = "11"
+Operation: Division
+Output: Qout = 2, c = '0', z = '0'
+
+Notes
+Ensure that the input values for A and B are within the valid range (0 to 15).
